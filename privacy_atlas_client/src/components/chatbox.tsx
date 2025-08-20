@@ -6,20 +6,16 @@ import {
   SubmitHandler,
 } from "@modular-forms/solid";
 import { createMemo, onMount, Setter } from "solid-js";
-import { Accessor } from "solid-js/types/server/reactive.js";
 
 type ChatBoxProps = {
-  inputAccess: Accessor<string>;
   inputSetter: Setter<string>;
-  submitBtnFunc: () => void;
-  submitEnterFunc: (e: KeyboardEvent) => void;
 };
 
 type ChatBoxForm = {
   charQuery: string;
 };
 
-const ChatBox = ({}: ChatBoxProps) => {
+const ChatBox = ({ inputSetter }: ChatBoxProps) => {
   const [chatBoxForm, { Form, Field }] = createForm<ChatBoxForm>();
 
   const isQueryEmpty = createMemo(() => {
@@ -28,7 +24,7 @@ const ChatBox = ({}: ChatBoxProps) => {
   });
 
   const handleSubmit: SubmitHandler<ChatBoxForm> = (values, event) => {
-    console.log(values);
+    inputSetter(values.charQuery);
     setValue(chatBoxForm, "charQuery", "");
   };
 
