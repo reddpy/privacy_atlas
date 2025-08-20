@@ -18,11 +18,15 @@ export default function Home() {
   });
 
   return (
-    <main class="text-center mx-auto text-gray-700 p-4">
-      <h1 class=" max-6-xs text-6xl text-sky-500 font-thin uppercase my-16">
-        Atlas
-      </h1>
-      <ChatBox inputSetter={setInput} />
+    <main class="min-h-screen text-gray-700">
+      <div class="mt-[20vh] flex flex-col items-center">
+        <h1 class="max-6-xs text-2xl  font-thin uppercase my-8">
+          <span class="text-6xl text-sky-500">Atlas</span> chat
+        </h1>
+        <div class="w-full max-w-4xl px-4">
+          <ChatBox inputSetter={setInput} />
+        </div>
+      </div>
     </main>
   );
 }

@@ -56,7 +56,7 @@ const ChatBox = ({ inputSetter }: ChatBoxProps) => {
                   {...props}
                   id={field.name}
                   ref={textareaRef}
-                  placeholder="Chat with Atlas..."
+                  placeholder="The weight of Knowledge...Atlas bears"
                   class="textarea border-none w-full resize-none focus:outline-none focus:ring-2 focus:ring-sky-500 rounded-xl overflow-hidden"
                   rows="1"
                   value={field.value}
