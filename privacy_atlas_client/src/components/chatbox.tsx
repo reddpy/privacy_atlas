@@ -39,10 +39,15 @@ const ChatBox = ({ inputSetter }: ChatBoxProps) => {
 
   onMount(() => {
     if (!textareaRef) return;
-    textareaRef.addEventListener("input", () => {
-      textareaRef!.style.height = "auto"; // reset
-      textareaRef!.style.height = textareaRef!.scrollHeight + "px"; // grow
-    });
+
+    const resize = () => {
+      textareaRef!.style.height = "auto";
+      textareaRef!.style.height = textareaRef!.scrollHeight + "px";
+    };
+
+    textareaRef.addEventListener("input", resize);
+    textareaRef.addEventListener("keydown", resize);
+    textareaRef.addEventListener("keyup", resize);
   });
 
   return (
