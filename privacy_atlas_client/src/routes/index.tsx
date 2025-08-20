@@ -4,25 +4,7 @@ import ChatBox from "~/components/chatbox";
 export default function Home() {
   const [input, setInput] = createSignal("");
 
-  const handleSubmitBtn = async () => {
-    console.log("submitted!");
-    const message = input().trim();
-    if (!message) return;
-
-    //submit logic
-    setInput("");
-  };
-
-  const handleSubmitEnter = async (event: KeyboardEvent) => {
-    if (event.key === "Enter" && !event.shiftKey) {
-      console.log("submitted!");
-      const message = input().trim();
-      if (!message) return;
-
-      //submit logic
-      setInput("");
-    }
-  };
+  const handleSubmitBtn = async () => {};
 
   return (
     <main class="text-center mx-auto text-gray-700 p-4">
@@ -33,7 +15,7 @@ export default function Home() {
         inputAccess={input}
         inputSetter={setInput}
         submitBtnFunc={handleSubmitBtn}
-        submitEnterFunc={handleSubmitEnter}
+        submitEnterFunc={handleSubmitBtn}
       />
     </main>
   );
