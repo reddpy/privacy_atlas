@@ -1,4 +1,4 @@
-import { createSignal, onMount } from "solid-js";
+import { createSignal } from "solid-js";
 import ChatBox from "~/components/chatbox";
 
 export default function Home() {
@@ -30,6 +30,8 @@ export default function Home() {
         Atlas
       </h1>
       <ChatBox
+        inputAccess={input}
+        inputSetter={setInput}
         submitBtnFunc={handleSubmitBtn}
         submitEnterFunc={handleSubmitEnter}
       />

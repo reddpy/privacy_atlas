@@ -1,19 +1,26 @@
-import { createSignal, onMount } from "solid-js";
+import { createSignal, onMount, Setter } from "solid-js";
+import { Accessor } from "solid-js/types/server/reactive.js";
 
 type ChatBoxProps = {
+  inputAccess: Accessor<string>;
+  inputSetter: Setter<string>;
   submitBtnFunc: () => void;
   submitEnterFunc: (e: KeyboardEvent) => void;
 };
 
-const ChatBox = ({ submitBtnFunc, submitEnterFunc }: ChatBoxProps) => {
-  const [input, setInput] = createSignal("");
+const ChatBox = ({
+  inputAccess,
+  inputSetter,
+  submitBtnFunc,
+  submitEnterFunc,
+}: ChatBoxProps) => {
   const [input_null, setInputNull] = createSignal(true);
 
   const inputCheck = (event: any) => {
-    let input_value = event.currentTarget.value;
-    setInput(event.currentTarget.value);
+    let input_value_local = event.currentTarget.value;
+    inputSetter(event.currentTarget.value);
 
-    let input_null = String(input_value).trim() === "";
+    let input_null = String(input_value_local).trim() === "";
     setInputNull(input_null);
   };
 
@@ -36,7 +43,7 @@ const ChatBox = ({ submitBtnFunc, submitEnterFunc }: ChatBoxProps) => {
             placeholder="Chat with Atlas..."
             class="textarea border-none w-full resize-none focus:outline-none focus:ring-2 focus:ring-sky-500 rounded-xl overflow-hidden"
             rows="1"
-            value={input()}
+            value={inputAccess()}
             onInput={inputCheck}
             onKeyDown={submitEnterFunc}
           />
