@@ -18,15 +18,26 @@ export default function Home() {
   });
 
   return (
-    <main class="min-h-screen text-gray-700">
-      <div class="mt-[20vh] flex flex-col items-center">
-        <h1 class="max-6-xs text-2xl  font-thin uppercase my-8">
-          <span class="text-6xl text-sky-500">Atlas</span> chat
+    <main class="min-h-screen text-gray-700 relative overflow-hidden">
+      <div class="pt-[20vh] flex flex-col items-center px-4 relative z-20">
+        <h1 class="max-6-xs text-2xl font-thin uppercase my-8 text-center">
+          <span class="text-4xl sm:text-6xl font-normal text-sky-500">
+            Atlas
+          </span>{" "}
+          chat
+          <span class="font-bold text-[#B62E00]">.</span>
         </h1>
-        <div class="w-full max-w-4xl px-4">
+        <div class="w-full max-w-4xl mb-8">
           <ChatBox inputSetter={setInput} />
         </div>
       </div>
+
+      {/* Atlas positioned to peek behind search */}
+      <img
+        class="absolute top-[15vh] left-1/2 transform -translate-x-1/2 w-[600px] min-w-[600px] max-w-[600px] opacity-10 z-0 pointer-events-none"
+        src="/atlas.png"
+        alt="Atlas bearing the weight of knowledge"
+      />
     </main>
   );
 }
