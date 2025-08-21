@@ -2,6 +2,37 @@
 @plugin "daisyui" {
     themes: all;
 }
+
+@font-face {
+    font-family: "EBGaramond";
+    src: url("/fonts/EBGaramond-VariableFont_wght.ttf") format("truetype");
+    font-display: swap;
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "EBGaramond";
+    src: url("/fonts/EBGaramond-Italic-VariableFont_wght.ttf")
+        format("truetype");
+    font-display: swap;
+    font-weight: 100 900;
+    font-style: italic;
+}
+
+.font-garamond {
+    font-family: "EBGaramond", serif;
+}
+
+.font-garamond-semi-bold {
+    font-family: "EBGaramond", serif;
+    font-weight: 500;
+}
+
+.font-garamond-bold {
+    font-family: "EBGaramond", serif;
+    font-weight: 700;
+}
 /*:root {
     --background-rgb: 214, 219, 220;
     --foreground-rgb: 0, 0, 0;

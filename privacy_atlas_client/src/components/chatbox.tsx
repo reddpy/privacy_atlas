@@ -43,8 +43,19 @@ const ChatBox = ({ inputSetter }: ChatBoxProps) => {
     if (!textareaRef) return;
 
     const resize = () => {
+      const maxHeight = 240;
+
       textareaRef!.style.height = "auto";
-      textareaRef!.style.height = textareaRef!.scrollHeight + "px";
+
+      if (textareaRef!.scrollHeight <= maxHeight) {
+        // Still within limit - grow normally
+        textareaRef!.style.height = textareaRef!.scrollHeight + "px";
+        textareaRef!.style.overflowY = "hidden";
+      } else {
+        // Hit the limit - make it scrollable
+        textareaRef!.style.height = maxHeight + "px";
+        textareaRef!.style.overflowY = "auto";
+      }
     };
 
     textareaRef.addEventListener("input", resize);
@@ -64,7 +75,7 @@ const ChatBox = ({ inputSetter }: ChatBoxProps) => {
                   id={field.name}
                   ref={textareaRef}
                   placeholder="The Weight of Knowledge...Atlas bears"
-                  class="textarea border-none w-full resize-none focus:outline-none focus:ring-2 focus:ring-sky-500 rounded-xl overflow-hidden"
+                  class="h-[40px] min-h-[40px] textarea border-none w-full resize-none focus:outline-none focus:ring-2 focus:ring-sky-500 rounded-xl overflow-hidden"
                   rows="1"
                   value={field.value}
                 />
