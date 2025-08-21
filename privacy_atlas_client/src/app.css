@@ -13,7 +13,7 @@
 
 @font-face {
     font-family: "EBGaramond";
-    src: url("/fonts/EBGaramond-Italic-VariableFont_wght.ttf")
+    src: url("/fonts/EBGaramond/EBGaramond-Italic-VariableFont_wght.ttf")
         format("truetype");
     font-display: swap;
     font-weight: 100 900;
@@ -33,6 +33,32 @@
     font-family: "EBGaramond", serif;
     font-weight: 700;
 }
+
+@font-face {
+    font-family: "AppleGaramond";
+    src: url("/fonts/AppleGaramond/AppleGaramond.ttf") format("truetype");
+    font-display: swap;
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+.font-apple-garamond {
+    font-family: "AppleGaramond", serif;
+}
+
+@font-face {
+    font-family: "AppleGaramond-BoldItalic";
+    src: url("/fonts/AppleGaramond/AppleGaramond-BoldItalic.ttf")
+        format("truetype");
+    font-display: swap;
+    font-weight: 100 900;
+    font-style: italic;
+}
+
+.font-apple-garamond-italic {
+    font-family: "AppleGaramond-BoldItalic", serif;
+}
+
 /*:root {
     --background-rgb: 214, 219, 220;
     --foreground-rgb: 0, 0, 0;
