@@ -20,6 +20,10 @@ type ChatBoxForm = {
 const ChatBox = ({ inputSetter }: ChatBoxProps) => {
   const [chatBoxForm, { Form, Field }] = createForm<ChatBoxForm>();
 
+  const playSound = () => {
+    new Audio("/sounds/subtle_notif.mp3").play();
+  };
+
   const isQueryEmpty = createMemo(() => {
     const queryValue = getValue(chatBoxForm, "charQuery");
     return !queryValue || queryValue.trim() === "";
@@ -28,12 +32,18 @@ const ChatBox = ({ inputSetter }: ChatBoxProps) => {
   const handleSubmit: SubmitHandler<ChatBoxForm> = (values, event) => {
     inputSetter(values.charQuery);
     setValue(chatBoxForm, "charQuery", "");
+    playSound();
   };
 
   const handleSubmitKey = (event: KeyboardEvent) => {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
-      submit(chatBoxForm);
+
+      let chatQuery = getValue(chatBoxForm, "charQuery")!.trim();
+
+      if (chatBoxForm.touched && chatQuery !== "") {
+        submit(chatBoxForm);
+      }
     }
   };
 
@@ -67,7 +77,8 @@ const ChatBox = ({ inputSetter }: ChatBoxProps) => {
     <>
       <Form onSubmit={handleSubmit} onKeyDown={handleSubmitKey}>
         <div class="w-full max-w-2xl mx-auto">
-          <div class="flex items-end gap-2 p-3 border border-[#B62E00] rounded-2xl bg-base-100 shadow-md">
+          <div class="flex items-end gap-2 p-3 border border-[#B62E00] rounded-2xl bg-base-100 [box-shadow:0_0_12px_rgba(14,165,233,0.5)]">
+            {" "}
             <Field name="charQuery">
               {(field, props) => (
                 <textarea
@@ -81,7 +92,6 @@ const ChatBox = ({ inputSetter }: ChatBoxProps) => {
                 />
               )}
             </Field>
-
             <button
               disabled={isQueryEmpty()}
               class="btn btn-neutral btn-circle"
