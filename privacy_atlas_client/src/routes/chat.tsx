@@ -15,59 +15,44 @@ const ChatPage = () => {
 
       <div
         id="chat_message_container"
-        class="w-full max-w-2xl mx-auto space-y-4 pb-32 pt-14 pl-4"
+        class="w-full mx-auto pb-28 pt-14 overflow-y-auto h-screen"
       >
-        <div>Message 1</div>
-        <div>Message 2</div>
-        <div>Message 2</div>
-        <div>Message 1</div>
-        <div>Message 2</div>
-        <div>Message 2</div>
-        <div>Message 1</div>
-        <div>Message 2</div>
-        <div>Message 2</div>
-        <div>Message 1</div>
-        <div>Message 2</div>
-        <div>Message 2</div>
-        <div>Message 1</div>
-        <div>Message 2</div>
-        <div>Message 2</div>
-        <div>Message 1</div>
-        <div>Message 2</div>
-        <div>Message 2</div>
-        <div>Message 1</div>
-        <div>Message 2</div>
-        <div>Message 2</div>
-        <div>Message 1</div>
-        <div>Message 2</div>
-        <div>Message 2</div>
-        <div>Message 1</div>
-        <div>Message 2</div>
-        <div>Message 2</div>
-        <div>Message 1</div>
-        <div>Message 2</div>
-        <div>Message 2</div>
-        <div>Message 1</div>
-        <div>Message 2</div>
-        <div>Message 2</div>
-        <div>Message 1</div>
-        <div>Message 2</div>
-        <div>Message 2</div>
-        <div>Message 1</div>
-        <div>Message 2</div>
-        <div>Message 2</div>
-        <div>Message 1</div>
-        <div>Message 2</div>
-        <div>Message 2</div>
-        <div>Message 1</div>
-        <div>Message 2</div>
-        <div>Message 2</div>
-        <div>Message 1</div>
-        <div>Message 2</div>
-        <div>Message 2</div>
-        <div>Message 1</div>
-        <div>Message 2</div>
-        <div>Message 2</div>
+        <div class="max-w-2xl pl-6 mx-auto space-y-4">
+          <div>Message 1</div>
+          <div>Message 2</div>
+          <div>Message 1</div>
+          <div>Message 2</div>
+          <div>Message 1</div>
+          <div>Message 2</div>
+          <div>Message 1</div>
+          <div>Message 2</div>
+          <div>Message 1</div>
+          <div>Message 2</div>
+          <div>Message 1</div>
+          <div>Message 2</div>
+          <div>Message 1</div>
+          <div>Message 2</div>
+          <div>Message 1</div>
+          <div>Message 2</div>
+          <div>Message 1</div>
+          <div>Message 2</div>
+          <div>Message 1</div>
+          <div>Message 2</div>
+          <div>Message 1</div>
+          <div>Message 2</div>
+          <div>Message 1</div>
+          <div>Message 2</div>
+          <div>Message 1</div>
+          <div>Message 2</div>
+          <div>Message 1</div>
+          <div>Message 2</div>
+          <div>Message 1</div>
+          <div>Message 2</div>
+          <div>Message 1</div>
+          <div>Message 2</div>
+          <div>Message 1</div>
+          <div>Message 2</div>
+        </div>
       </div>
 
       <div
