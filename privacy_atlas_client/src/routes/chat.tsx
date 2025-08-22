@@ -3,21 +3,18 @@ import AtlasWord from "~/components/atlasWord";
 
 const ChatPage = () => {
   return (
-    <div class="fade-in-page flex flex-col p-1 h-screen gap-4 relative">
+    <div class="fade-in-page grid grid-rows-[auto_1fr_auto] h-screen">
       <div
         id="chat_header"
-        class="glass fixed top-0 pointer-events-none border-none h-9 flex-shrink-0 w-full mx-auto flex items-center justify-center"
+        class="glass fixed top-0 pointer-events-none border-none h-9 flex-shrink-0 w-full mx-auto flex items-center justify-center z-10"
       >
         <p class="text-3xl">
           <AtlasWord />
         </p>
       </div>
 
-      <div
-        id="chat_message_container"
-        class="w-full mx-auto pb-28 pt-14 overflow-y-auto h-screen"
-      >
-        <div class="max-w-2xl pl-6 mx-auto space-y-4">
+      <div id="chat_message_container" class="w-full mx-auto overflow-y-auto">
+        <div class="max-w-2xl pl-6 mx-auto space-y-4 pt-14 pb-4">
           <div>Message 1</div>
           <div>Message 2</div>
           <div>Message 1</div>
@@ -52,12 +49,17 @@ const ChatPage = () => {
           <div>Message 2</div>
           <div>Message 1</div>
           <div>Message 2</div>
+          <div>Message 1</div>
+          <div>Message 2</div>
+          <div>Message 1</div>
+          <div>Message 2</div>
+          <div>BLAHHHHHHHHH</div>
         </div>
       </div>
 
       <div
         id="chat_box_container"
-        class="fixed bottom-0 left-0 right-0 pointer-events-none pb-2 bg-[#FFF7ED] px-2 sm:px-0"
+        class="pointer-events-none bg-[#FFF7ED] px-2 sm:px-0 pb-2"
       >
         <div class="w-full max-w-2xl mx-auto pointer-events-auto">
           <ChatBoxChat />
