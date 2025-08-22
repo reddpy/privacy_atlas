@@ -17,7 +17,7 @@ type ChatBoxForm = {
   charQuery: string;
 };
 
-const ChatBox = ({ inputSetter }: ChatBoxProps) => {
+const ChatBoxChat = ({ inputSetter }: ChatBoxProps) => {
   const [chatBoxForm, { Form, Field }] = createForm<ChatBoxForm>();
 
   const playSound = () => {
@@ -94,7 +94,7 @@ const ChatBox = ({ inputSetter }: ChatBoxProps) => {
   return (
     <>
       <Form onSubmit={handleSubmit} onKeyDown={handleSubmitKey}>
-        <div class="w-full max-w-2xl mx-auto">
+        <div class="w-full max-w-2xl mx-auto flex flex-col justify-end">
           <div class="flex items-end gap-2 p-3 border border-[#B62E00] rounded-2xl bg-base-100 shadow-lg">
             <Field name="charQuery">
               {(field, props) => (
@@ -123,4 +123,4 @@ const ChatBox = ({ inputSetter }: ChatBoxProps) => {
   );
 };
 
-export default ChatBox;
+export default ChatBoxChat;
