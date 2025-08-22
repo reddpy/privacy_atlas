@@ -1,19 +1,23 @@
+import { useNavigate } from "@solidjs/router";
 import { createEffect, createSignal } from "solid-js";
 import ChatBox from "~/components/chatbox";
 
 export default function Home() {
   const [input, setInput] = createSignal("");
+  const navigate = useNavigate();
 
   // Watch for changes to input
   createEffect(() => {
     const currentInput = input();
 
-    // This runs every time input() changes
+    // This runs when the chat is submitted
     if (currentInput && currentInput.trim() !== "") {
       console.log("Input changed to:", currentInput);
 
-      // logic here
-      //will handle redirect to chat
+      return navigate("/chat");
+      //navigates to chat page upon submit
+      //need to send chat message contents
+      // to the new page.
     }
   });
 
