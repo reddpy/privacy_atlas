@@ -13,7 +13,11 @@ export default function Home() {
     // This runs when the chat is submitted
     if (currentInput && currentInput.trim() !== "") {
       console.log("Input changed to:", currentInput);
-      navigate("/chat"); //navigates to chat page upon submit
+
+      return navigate("/chat");
+      //navigates to chat page upon submit
+      //need to send chat message contents
+      // to the new page.
     }
   });
 

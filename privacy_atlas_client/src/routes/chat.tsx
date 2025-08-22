@@ -1,10 +1,8 @@
 const ChatPage = () => {
   return (
-    <>
-      <div>
-        <p>new chat!</p>
-      </div>
-    </>
+    <div class="fade-in-page">
+      <p>New chat!</p>
+    </div>
   );
 };
 
