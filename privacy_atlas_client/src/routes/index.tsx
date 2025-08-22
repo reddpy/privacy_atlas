@@ -1,5 +1,6 @@
 import { useNavigate } from "@solidjs/router";
 import { createEffect, createSignal } from "solid-js";
+import AtlasWord from "~/components/atlasWord";
 import ChatBox from "~/components/chatbox";
 
 export default function Home() {
@@ -24,11 +25,8 @@ export default function Home() {
   return (
     <main class="min-h-screen text-gray-700 relative overflow-hidden">
       <div class="pt-[17vh] flex flex-col items-center px-4 relative z-20">
-        <h1 class="max-6-xs  my-6 text-2xl text-center animate-logo">
-          <span class="font-apple-garamond-italic text-6xl text-sky-500">
-            Atlas
-          </span>
-          <span class="font-bold text-[#B62E00]">.</span>
+        <h1 class="max-6-xs my-6 text-6xl text-center animate-logo">
+          <AtlasWord />
         </h1>
 
         <p class="pb-5 font-normal text-3xl font-apple-garamond text-center animate-subtitle">
