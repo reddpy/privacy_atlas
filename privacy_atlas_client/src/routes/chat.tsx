@@ -13,8 +13,11 @@ const ChatPage = () => {
         </p>
       </div>
 
-      <div id="chat_message_container" class="w-full mx-auto overflow-y-auto">
-        <div class="max-w-2xl pl-6 mx-auto space-y-4 pt-14 pb-4">
+      <div
+        id="chat_message_container"
+        class="w-full mx-auto overflow-y-auto scrollbar-thin scrollbar-thumb-sky-500 scrollbar-track-[#FFF7ED] "
+      >
+        <div class="max-w-2xl pl-6 mx-auto space-y-4 pt-16 pb-10">
           <div>Message 1</div>
           <div>Message 2</div>
           <div>Message 1</div>

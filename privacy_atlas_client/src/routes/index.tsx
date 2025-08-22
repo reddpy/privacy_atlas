@@ -25,7 +25,7 @@ export default function Home() {
   return (
     <main class="min-h-screen text-gray-700 relative overflow-hidden">
       <div class="pt-[17vh] flex flex-col items-center px-4 relative z-20">
-        <h1 class="max-6-xs my-6 text-6xl text-center animate-logo">
+        <h1 class="max-6-xs my-6 text-7xl text-center animate-logo">
           <AtlasWord />
         </h1>
 

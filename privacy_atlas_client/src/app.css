@@ -3,6 +3,8 @@
     themes: all;
 }
 
+@plugin 'tailwind-scrollbar';
+
 @font-face {
     font-family: "EBGaramond";
     src: url("/fonts/EBGaramond-VariableFont_wght.ttf") format("truetype");
