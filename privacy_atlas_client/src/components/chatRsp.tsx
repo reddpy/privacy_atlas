@@ -4,7 +4,7 @@ import AtlasABR from "./atlasAbr";
 const ChatRsp = () => {
   return (
     <div class="w-full flex items-center gap-3 px-4 py-2">
-      <div class="flex-1">
+      <div class="flex-1 px-4 md:px-0">
         simply dummy text of the printing and typesetting industry. Lorem Ipsum
         has been the industry's standard dummy text ever since the 1500s, when
         an unknown printer took a galley of type and scrambled it to make a type

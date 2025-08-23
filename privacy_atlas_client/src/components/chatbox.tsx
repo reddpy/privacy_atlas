@@ -54,7 +54,6 @@ const ChatBox = ({ inputSetter }: ChatBoxProps) => {
 
     const resize = () => {
       const maxHeight = 240;
-
       // Save current state
       const scrollTop = textareaRef!.scrollTop;
       const selectionStart = textareaRef!.selectionStart;
@@ -73,9 +72,7 @@ const ChatBox = ({ inputSetter }: ChatBoxProps) => {
         // Content exceeds max height - set to max and enable scrolling
         textareaRef!.style.height = maxHeight + "px";
         textareaRef!.style.overflowY = "auto";
-
         // Only restore scroll position if we were previously at max height
-        // This prevents jumping when transitioning from auto-height to max-height
         if (wasAtMaxHeight) {
           requestAnimationFrame(() => {
             textareaRef!.scrollTop = scrollTop;
@@ -94,7 +91,7 @@ const ChatBox = ({ inputSetter }: ChatBoxProps) => {
   return (
     <>
       <Form onSubmit={handleSubmit} onKeyDown={handleSubmitKey}>
-        <div class="w-full max-w-2xl mx-auto">
+        <div class="w-full max-w-3xl mx-auto">
           <div class="flex items-end gap-2 p-3 border border-[#B62E00] rounded-2xl bg-base-100 shadow-lg">
             <Field name="charQuery">
               {(field, props) => (
@@ -103,9 +100,13 @@ const ChatBox = ({ inputSetter }: ChatBoxProps) => {
                   id={field.name}
                   ref={textareaRef}
                   placeholder="The Weight of Knowledge, Atlas bears"
-                  class="h-[40px] min-h-[40px] textarea border-none w-full resize-none focus:outline-none focus:ring-2 focus:ring-sky-500 rounded-xl overflow-hidden"
+                  class="h-[40px] min-h-[40px] textarea border-none w-full resize-none focus:outline-none focus:ring-2 focus:ring-sky-500 rounded-xl"
                   rows="1"
                   value={field.value}
+                  autocomplete="off"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  spellcheck="false"
                 />
               )}
             </Field>
