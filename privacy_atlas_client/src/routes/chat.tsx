@@ -19,11 +19,11 @@ const ChatPage = () => {
         id="chat_message_container"
         class="w-full mx-auto overflow-y-auto scrollbar-thin scrollbar-thumb-sky-500 scrollbar-track-[#FFF7ED] "
       >
-        <div class="max-w-2xl pl-6 mx-auto space-y-12 pt-16 pb-10">
+        <div class="max-w-3xl mx-auto space-y-4 pt-16 pb-10">
           <ChatMsg />
           <ChatRsp />
-
-          <div>BLAHHHHHHHHH</div>
+          <ChatMsg />
+          <ChatRsp />
         </div>
       </div>
 
@@ -31,7 +31,7 @@ const ChatPage = () => {
         id="chat_box_container"
         class="pointer-events-none bg-[#FFF7ED] px-2 sm:px-0 pb-2"
       >
-        <div class="w-full max-w-2xl mx-auto pointer-events-auto">
+        <div class="w-full max-w-3xl mx-auto pointer-events-auto">
           <ChatBoxChat />
         </div>
       </div>
