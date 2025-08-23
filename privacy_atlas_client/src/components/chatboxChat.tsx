@@ -94,7 +94,7 @@ const ChatBoxChat = ({ inputSetter }: ChatBoxProps) => {
   return (
     <>
       <Form onSubmit={handleSubmit} onKeyDown={handleSubmitKey}>
-        <div class="w-full max-w-2xl mx-auto flex flex-col justify-end">
+        <div class="w-full mx-auto flex flex-col justify-end">
           <div class="flex items-end gap-2 p-3 border border-[#B62E00] rounded-2xl bg-base-100 shadow-lg">
             <Field name="charQuery">
               {(field, props) => (
@@ -102,10 +102,14 @@ const ChatBoxChat = ({ inputSetter }: ChatBoxProps) => {
                   {...props}
                   id={field.name}
                   ref={textareaRef}
-                  placeholder="The Weight of Knowledge, Atlas bears"
+                  placeholder="Ask Atlas Anything..."
                   class="h-[40px] min-h-[40px] textarea border-none w-full resize-none focus:outline-none focus:ring-2 focus:ring-sky-500 rounded-xl overflow-hidden"
                   rows="1"
                   value={field.value}
+                  autocomplete="off"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  spellcheck="false"
                 />
               )}
             </Field>
