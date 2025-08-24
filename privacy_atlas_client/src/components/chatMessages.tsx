@@ -1,14 +1,13 @@
-import { MessageCircleQuestionMark } from "lucide-solid";
 import { marked } from "marked";
 import { For, Show, onMount } from "solid-js";
 import { useChatContext } from "~/contexts/chatContext";
-import AtlasABR from "./atlasAbr";
+import AtlasThinking from "./chatMessages/atlasThinking";
+import UserResp from "./chatMessages/userResp";
 
 const ChatMessages = () => {
   const { messages, currentResponse, isStreaming } = useChatContext();
   let messagesEndRef: HTMLDivElement | undefined;
 
-  // Configure marked options (optional)
   marked.setOptions({
     breaks: true, // Convert \n to <br>
     gfm: true, // GitHub Flavored Markdown
@@ -50,23 +49,10 @@ const ChatMessages = () => {
       <For each={allMessages()}>
         {(message) => (
           <>
-            {/* User Messages */}
             <Show when={message.role === "user"}>
-              <div class="w-full flex justify-end px-6">
-                <div class="indicator">
-                  <div class="indicator-item indicator-bottom indicator-end">
-                    <div class="bg-sky-500 rounded-full w-8 h-8 flex items-center justify-center">
-                      <MessageCircleQuestionMark class="w-5 h-5 text-white" />
-                    </div>
-                  </div>
-                  <div class="border-base-300 border shadow-sm rounded-2xl p-2 px-4">
-                    <div class="whitespace-pre-wrap">{message.content}</div>
-                  </div>
-                </div>
-              </div>
+              <UserResp content={message.content} />
             </Show>
 
-            {/* Assistant Messages */}
             <Show when={message.role === "assistant"}>
               <div class="w-full flex items-center gap-3 px-4 py-2">
                 <div class="flex-1 px-4 md:px-0 min-w-0">
@@ -76,24 +62,10 @@ const ChatMessages = () => {
                     }
                   >
                     <div class="flex items-center gap-2">
-                      <span>
-                        <AtlasABR /> is thinking
-                      </span>
-                      <div class="flex space-x-1">
-                        <div class="w-1 h-1 bg-sky-500 rounded-full animate-bounce"></div>
-                        <div
-                          class="w-1 h-1 bg-sky-500 rounded-full animate-bounce"
-                          style="animation-delay: 0.1s"
-                        ></div>
-                        <div
-                          class="w-1 h-1 bg-sky-500 rounded-full animate-bounce"
-                          style="animation-delay: 0.2s"
-                        ></div>
-                      </div>
+                      <AtlasThinking />
                     </div>
                   </Show>
                   <Show when={message.content}>
-                    {/* Render markdown content */}
                     <div
                       class="prose prose-sm w-full min-w-0 [&_pre]:overflow-x-auto [&_pre]:whitespace-pre [&_pre]:w-full [&_pre]:min-w-0 [&_code]:text-sm"
                       innerHTML={renderMarkdown(message.content)}
