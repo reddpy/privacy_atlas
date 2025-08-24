@@ -1,14 +1,31 @@
 // src/routes/api/ollama.ts
 import { APIEvent } from "@solidjs/start/server";
 
+type Message = {
+  role: "user" | "assistant" | "system";
+  content: string;
+};
+
 export async function POST(event: APIEvent) {
-  // Get message from request body, with fallback
-  let message = "Hello, how are you?";
+  // Get messages from request body, with fallback
+  let messages = [{ role: "user", content: "Hello, how are you?" }];
   let model = "gemma3n:latest";
 
   try {
     const body = await event.request.json();
-    if (body.message) message = body.message;
+
+    // Handle both old single message format and new messages array format
+    if (body.messages && Array.isArray(body.messages)) {
+      // New format - array of messages
+      messages = body.messages.map((msg: Message) => ({
+        role: msg.role,
+        content: msg.content,
+      }));
+    } else if (body.message) {
+      // Old format - single message (for backwards compatibility)
+      messages = [{ role: "user", content: body.message }];
+    }
+
     if (body.model) model = body.model;
   } catch (e) {
     // Use defaults if no valid JSON body
@@ -24,15 +41,9 @@ export async function POST(event: APIEvent) {
           },
           body: JSON.stringify({
             model,
-            messages: [
-              {
-                role: "user",
-                content: message,
-              },
-            ],
+            messages: messages, // Send the full conversation history
             stream: true,
           }),
-          // Pass through the abort signal from the original request
           signal: event.request.signal,
         });
 
@@ -43,7 +54,6 @@ export async function POST(event: APIEvent) {
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
 
-        // Listen for client disconnect
         event.request.signal.addEventListener("abort", () => {
           reader.cancel();
           controller.close();
@@ -51,7 +61,6 @@ export async function POST(event: APIEvent) {
 
         while (true) {
           const { done, value } = await reader.read();
-
           if (done) {
             controller.close();
             break;
@@ -63,7 +72,6 @@ export async function POST(event: APIEvent) {
           for (const line of lines) {
             try {
               const data = JSON.parse(line);
-
               if (data.message?.content) {
                 controller.enqueue(
                   `data: ${JSON.stringify({
@@ -72,7 +80,6 @@ export async function POST(event: APIEvent) {
                   })}\n\n`,
                 );
               }
-
               if (data.done) {
                 controller.enqueue(
                   `data: ${JSON.stringify({ type: "done" })}\n\n`,
@@ -85,13 +92,11 @@ export async function POST(event: APIEvent) {
             }
           }
         }
-      } catch (error) {
+      } catch (error: any) {
         if (error.name === "AbortError") {
-          // Request was aborted - clean up and close
           controller.close();
           return;
         }
-
         controller.enqueue(
           `data: ${JSON.stringify({
             type: "error",

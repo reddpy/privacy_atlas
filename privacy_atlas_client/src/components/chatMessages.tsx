@@ -77,7 +77,7 @@ const ChatMessages = () => {
                   >
                     <div class="flex items-center gap-2">
                       <span>
-                        <AtlasABR /> is Thinking
+                        <AtlasABR /> is thinking
                       </span>
                       <div class="flex space-x-1">
                         <div class="w-1 h-1 bg-sky-500 rounded-full animate-bounce"></div>

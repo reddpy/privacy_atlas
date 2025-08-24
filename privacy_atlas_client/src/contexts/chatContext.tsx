@@ -92,13 +92,15 @@ export const ChatProvider = (props: ChatProviderProps) => {
     abortController = new AbortController();
 
     try {
+      const conversationHistory = [...messages(), userMessage];
+
       const response = await fetch("/api/ollama", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          message: content.trim(),
+          messages: conversationHistory,
           model: "gemma3n:latest",
         }),
         signal: abortController.signal, // Pass abort signal
