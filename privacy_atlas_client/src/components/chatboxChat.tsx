@@ -5,19 +5,17 @@ import {
   submit,
   SubmitHandler,
 } from "@modular-forms/solid";
-import { createMemo, onMount, Setter } from "solid-js";
-
-import { ArrowUp } from "lucide-solid";
-
-type ChatBoxProps = {
-  inputSetter: Setter<string>;
-};
+import { ArrowUp, Square } from "lucide-solid";
+import { createEffect, createMemo, onMount, Show } from "solid-js";
+import { useChatContext } from "~/contexts/chatContext";
+import { globalState, setGlobalState } from "~/stores/global";
 
 type ChatBoxForm = {
   charQuery: string;
 };
 
-const ChatBoxChat = ({ inputSetter }: ChatBoxProps) => {
+const ChatBoxChat = () => {
+  const { sendMessage, isStreaming, stopStreaming } = useChatContext();
   const [chatBoxForm, { Form, Field }] = createForm<ChatBoxForm>();
 
   const playSound = () => {
@@ -29,66 +27,86 @@ const ChatBoxChat = ({ inputSetter }: ChatBoxProps) => {
     return !queryValue || queryValue.trim() === "";
   });
 
-  const handleSubmit: SubmitHandler<ChatBoxForm> = (values, event) => {
-    inputSetter(values.charQuery);
-    setValue(chatBoxForm, "charQuery", "");
+  const handleSubmit: SubmitHandler<ChatBoxForm> = async (values, event) => {
+    if (isStreaming()) return;
+
+    await sendMessage(values.charQuery);
+    setValue(chatBoxForm, "charQuery", ""); // Clear input
+    playSound();
+  };
+
+  const handleStop = () => {
+    stopStreaming();
     playSound();
   };
 
   const handleSubmitKey = (event: KeyboardEvent) => {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
-
       let chatQuery = getValue(chatBoxForm, "charQuery")!.trim();
-
-      if (chatBoxForm.touched && chatQuery !== "") {
+      if (chatBoxForm.touched && chatQuery !== "" && !isStreaming()) {
         submit(chatBoxForm);
+        // Force height reset after a brief delay to ensure state update
+        setTimeout(() => {
+          if (textareaRef) {
+            textareaRef.style.height = "auto";
+            textareaRef.value = ""; // Explicitly clear the DOM value
+            resize();
+          }
+        }, 0);
       }
     }
   };
 
   let textareaRef: HTMLTextAreaElement | undefined;
 
-  onMount(() => {
+  const resize = () => {
     if (!textareaRef) return;
+    const maxHeight = 240;
+    const scrollTop = textareaRef.scrollTop;
+    const selectionStart = textareaRef.selectionStart;
+    const selectionEnd = textareaRef.selectionEnd;
+    const wasAtMaxHeight = textareaRef.style.height === maxHeight + "px";
 
-    const resize = () => {
-      const maxHeight = 240;
+    textareaRef.style.height = "auto";
+    const naturalHeight = textareaRef.scrollHeight;
 
-      // Save current state
-      const scrollTop = textareaRef!.scrollTop;
-      const selectionStart = textareaRef!.selectionStart;
-      const selectionEnd = textareaRef!.selectionEnd;
-      const wasAtMaxHeight = textareaRef!.style.height === maxHeight + "px";
-
-      // Always reset height to get natural content height
-      textareaRef!.style.height = "auto";
-      const naturalHeight = textareaRef!.scrollHeight;
-
-      if (naturalHeight <= maxHeight) {
-        // Content fits within max height - grow to fit content
-        textareaRef!.style.height = naturalHeight + "px";
-        textareaRef!.style.overflowY = "hidden";
-      } else {
-        // Content exceeds max height - set to max and enable scrolling
-        textareaRef!.style.height = maxHeight + "px";
-        textareaRef!.style.overflowY = "auto";
-
-        // Only restore scroll position if we were previously at max height
-        // This prevents jumping when transitioning from auto-height to max-height
-        if (wasAtMaxHeight) {
-          requestAnimationFrame(() => {
-            textareaRef!.scrollTop = scrollTop;
-            textareaRef!.setSelectionRange(selectionStart, selectionEnd);
-          });
-        }
+    if (naturalHeight <= maxHeight) {
+      textareaRef.style.height = naturalHeight + "px";
+      textareaRef.style.overflowY = "hidden";
+    } else {
+      textareaRef.style.height = maxHeight + "px";
+      textareaRef.style.overflowY = "auto";
+      if (wasAtMaxHeight) {
+        requestAnimationFrame(() => {
+          textareaRef.scrollTop = scrollTop;
+          textareaRef.setSelectionRange(selectionStart, selectionEnd);
+        });
       }
-    };
+    }
+  };
 
+  // Effect to handle textarea state when streaming stops
+  createEffect(() => {
+    if (!isStreaming() && textareaRef) {
+      textareaRef.disabled = false;
+      textareaRef.style.height = "auto";
+      resize();
+    }
+  });
+
+  onMount(() => {
+    setTimeout(async () => {
+      if (globalState.textQuery) {
+        await sendMessage(globalState.textQuery);
+        setValue(chatBoxForm, "charQuery", "");
+        setGlobalState("textQuery", "");
+      }
+    }, 100);
+
+    if (!textareaRef) return;
     textareaRef.addEventListener("input", resize);
-
-    // Initial resize
-    resize();
+    resize(); // Initial resize
   });
 
   return (
@@ -102,24 +120,43 @@ const ChatBoxChat = ({ inputSetter }: ChatBoxProps) => {
                   {...props}
                   id={field.name}
                   ref={textareaRef}
-                  placeholder="Ask Atlas Anything..."
+                  placeholder={
+                    isStreaming()
+                      ? "Consulting with the oracles"
+                      : "Ask Atlas Anything..."
+                  }
                   class="h-[40px] min-h-[40px] textarea border-none w-full resize-none focus:outline-none focus:ring-2 focus:ring-sky-500 rounded-xl overflow-hidden"
                   rows="1"
-                  value={field.value}
+                  value={field.value || ""} // Ensure value is set
                   autocomplete="off"
                   autocorrect="off"
                   autocapitalize="off"
                   spellcheck="false"
+                  disabled={isStreaming()} // Disable only during streaming
                 />
               )}
             </Field>
-            <button
-              disabled={isQueryEmpty()}
-              class="btn btn-neutral btn-circle"
-              type="submit"
-            >
-              <ArrowUp />
-            </button>
+
+            <Show when={!isStreaming()}>
+              <button
+                disabled={isQueryEmpty()}
+                class="btn btn-neutral btn-circle"
+                type="submit"
+              >
+                <ArrowUp />
+              </button>
+            </Show>
+
+            <Show when={isStreaming()}>
+              <button
+                type="button"
+                onClick={handleStop}
+                class="btn btn-error btn-circle"
+                title="Stop generating"
+              >
+                <Square class="w-4 h-4" />
+              </button>
+            </Show>
           </div>
         </div>
       </Form>

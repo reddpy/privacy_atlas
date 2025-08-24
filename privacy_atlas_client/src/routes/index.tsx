@@ -2,6 +2,7 @@ import { useNavigate } from "@solidjs/router";
 import { createEffect, createSignal } from "solid-js";
 import AtlasWord from "~/components/atlasWord";
 import ChatBox from "~/components/chatbox";
+import { globalState, setGlobalState } from "~/stores/global";
 
 export default function Home() {
   const [input, setInput] = createSignal("");
@@ -13,12 +14,9 @@ export default function Home() {
 
     // This runs when the chat is submitted
     if (currentInput && currentInput.trim() !== "") {
-      console.log("Input changed to:", currentInput);
+      setGlobalState("textQuery", currentInput);
 
       return navigate("/chat");
-      //navigates to chat page upon submit
-      //need to send chat message contents
-      // to the new page.
     }
   });
 
