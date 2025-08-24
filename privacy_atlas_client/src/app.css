@@ -112,3 +112,51 @@
         opacity: 1;
     }
 }
+
+/* Custom markdown styles */
+.prose {
+    line-height: 1.6;
+}
+
+.prose h1,
+.prose h2,
+.prose h3 {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.prose p {
+    margin-bottom: 0.75rem;
+}
+
+.prose code {
+    background-color: #f3f4f6;
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+}
+
+.prose pre {
+    background-color: #1f2937;
+    color: #f9fafb;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin: 0.75rem 0;
+}
+
+.prose pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+.prose ul,
+.prose ol {
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+}
+
+.prose li {
+    margin-bottom: 0.25rem;
+}

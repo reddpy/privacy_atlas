@@ -54,9 +54,19 @@ export const ChatProvider = (props: ChatProviderProps) => {
         ...prev,
         {
           role: "assistant",
-          content: partialResponse + "\n\n[Response stopped by user]",
+          content: partialResponse + "\n\n[Response Stopped]",
           timestamp: Date.now(),
           isStreaming: true,
+        },
+      ]);
+    } else {
+      // If no content was generated yet (just thinking), add a stopped message
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: "*[Response Stopped]*",
+          timestamp: Date.now(),
         },
       ]);
     }
