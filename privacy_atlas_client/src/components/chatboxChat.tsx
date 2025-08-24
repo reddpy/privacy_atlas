@@ -5,19 +5,16 @@ import {
   submit,
   SubmitHandler,
 } from "@modular-forms/solid";
-import { createMemo, onMount, Setter } from "solid-js";
-
-import { ArrowUp } from "lucide-solid";
-
-type ChatBoxProps = {
-  inputSetter: Setter<string>;
-};
+import { createMemo, onMount, Show } from "solid-js";
+import { ArrowUp, Square } from "lucide-solid";
+import { useChatContext } from "~/contexts/chatContext";
 
 type ChatBoxForm = {
   charQuery: string;
 };
 
-const ChatBoxChat = ({ inputSetter }: ChatBoxProps) => {
+const ChatBoxChat = () => {
+  const { sendMessage, isStreaming, stopStreaming } = useChatContext();
   const [chatBoxForm, { Form, Field }] = createForm<ChatBoxForm>();
 
   const playSound = () => {
@@ -29,19 +26,24 @@ const ChatBoxChat = ({ inputSetter }: ChatBoxProps) => {
     return !queryValue || queryValue.trim() === "";
   });
 
-  const handleSubmit: SubmitHandler<ChatBoxForm> = (values, event) => {
-    inputSetter(values.charQuery);
+  const handleSubmit: SubmitHandler<ChatBoxForm> = async (values, event) => {
+    if (isStreaming()) return;
+
+    await sendMessage(values.charQuery);
     setValue(chatBoxForm, "charQuery", "");
     playSound();
+  };
+
+  const handleStop = () => {
+    stopStreaming();
+    playSound(); // Optional: play sound when stopping
   };
 
   const handleSubmitKey = (event: KeyboardEvent) => {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
-
       let chatQuery = getValue(chatBoxForm, "charQuery")!.trim();
-
-      if (chatBoxForm.touched && chatQuery !== "") {
+      if (chatBoxForm.touched && chatQuery !== "" && !isStreaming()) {
         submit(chatBoxForm);
       }
     }
@@ -54,7 +56,6 @@ const ChatBoxChat = ({ inputSetter }: ChatBoxProps) => {
 
     const resize = () => {
       const maxHeight = 240;
-
       // Save current state
       const scrollTop = textareaRef!.scrollTop;
       const selectionStart = textareaRef!.selectionStart;
@@ -75,7 +76,6 @@ const ChatBoxChat = ({ inputSetter }: ChatBoxProps) => {
         textareaRef!.style.overflowY = "auto";
 
         // Only restore scroll position if we were previously at max height
-        // This prevents jumping when transitioning from auto-height to max-height
         if (wasAtMaxHeight) {
           requestAnimationFrame(() => {
             textareaRef!.scrollTop = scrollTop;
@@ -86,7 +86,6 @@ const ChatBoxChat = ({ inputSetter }: ChatBoxProps) => {
     };
 
     textareaRef.addEventListener("input", resize);
-
     // Initial resize
     resize();
   });
@@ -110,16 +109,31 @@ const ChatBoxChat = ({ inputSetter }: ChatBoxProps) => {
                   autocorrect="off"
                   autocapitalize="off"
                   spellcheck="false"
+                  disabled={isStreaming()}
                 />
               )}
             </Field>
-            <button
-              disabled={isQueryEmpty()}
-              class="btn btn-neutral btn-circle"
-              type="submit"
-            >
-              <ArrowUp />
-            </button>
+
+            <Show when={!isStreaming()}>
+              <button
+                disabled={isQueryEmpty()}
+                class="btn btn-neutral btn-circle"
+                type="submit"
+              >
+                <ArrowUp />
+              </button>
+            </Show>
+
+            <Show when={isStreaming()}>
+              <button
+                type="button"
+                onClick={handleStop}
+                class="btn btn-error btn-circle"
+                title="Stop generating"
+              >
+                <Square class="w-4 h-4" />
+              </button>
+            </Show>
           </div>
         </div>
       </Form>
