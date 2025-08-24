@@ -14,7 +14,6 @@ type ChatContextType = {
   isStreaming: () => boolean;
   sendMessage: (content: string) => Promise<void>;
   stopStreaming: () => void;
-  clearChat: () => void;
 };
 
 const ChatContext = createContext<ChatContextType>();
@@ -54,7 +53,7 @@ export const ChatProvider = (props: ChatProviderProps) => {
         ...prev,
         {
           role: "assistant",
-          content: partialResponse + "\n\n[Response Stopped]",
+          content: partialResponse + "\n\n*[Response Stopped]*",
           timestamp: Date.now(),
           isStreaming: true,
         },
@@ -67,6 +66,7 @@ export const ChatProvider = (props: ChatProviderProps) => {
           role: "assistant",
           content: "*[Response Stopped]*",
           timestamp: Date.now(),
+          isStreaming: false,
         },
       ]);
     }
@@ -138,6 +138,7 @@ export const ChatProvider = (props: ChatProviderProps) => {
                         role: "assistant",
                         content: finalContent,
                         timestamp: Date.now(),
+                        isStreaming: false,
                       },
                     ]);
                   }
@@ -176,25 +177,17 @@ export const ChatProvider = (props: ChatProviderProps) => {
     }
   };
 
-  const clearChat = () => {
-    // Stop any ongoing streaming first
-    if (isStreaming()) {
-      stopStreaming();
-    }
-    setMessages([]);
-    setCurrentResponse("");
-  };
-
-  const value: ChatContextType = {
+  const ChatStructures: ChatContextType = {
     messages,
     currentResponse,
     isStreaming,
     sendMessage,
     stopStreaming,
-    clearChat,
   };
 
   return (
-    <ChatContext.Provider value={value}>{props.children}</ChatContext.Provider>
+    <ChatContext.Provider value={ChatStructures}>
+      {props.children}
+    </ChatContext.Provider>
   );
 };
