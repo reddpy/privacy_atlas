@@ -1,6 +1,6 @@
 // src/components/chatMessages.tsx
 import { MessageCircleQuestionMark } from "lucide-solid";
-import { For, Show, createEffect, onMount } from "solid-js";
+import { For, Show, onMount } from "solid-js";
 import { useChatContext } from "~/contexts/chatContext";
 import AtlasABR from "./atlasAbr";
 
@@ -29,29 +29,6 @@ const ChatMessages = () => {
   const scrollToBottom = (behavior: ScrollBehavior = "smooth") => {
     messagesEndRef?.scrollIntoView({ behavior, block: "end" });
   };
-
-  // Auto-scroll when new messages are added or streaming text updates
-  createEffect(() => {
-    const msgs = allMessages();
-    const streaming = isStreaming();
-    const response = currentResponse();
-
-    // Scroll immediately when a new message starts
-    if (streaming && !response) {
-      scrollToBottom("smooth");
-    }
-    // Scroll as content is being streamed (but less frequently for performance)
-    else if (streaming && response) {
-      // Only scroll every ~100 characters to avoid too frequent scrolling
-      if (response.length % 50 === 0 || response.length < 50) {
-        scrollToBottom("smooth");
-      }
-    }
-    // Scroll when a message is completed
-    else if (msgs.length > 0) {
-      scrollToBottom("smooth");
-    }
-  });
 
   // Scroll to bottom on initial load
   onMount(() => {
@@ -90,7 +67,7 @@ const ChatMessages = () => {
                   >
                     <div class="flex items-center gap-2">
                       <span>
-                        <AtlasABR /> is thinking
+                        <AtlasABR /> is Thinking
                       </span>
                       <div class="flex space-x-1">
                         <div class="w-1 h-1 bg-sky-500 rounded-full animate-bounce"></div>

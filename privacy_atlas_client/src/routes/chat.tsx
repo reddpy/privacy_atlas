@@ -1,6 +1,5 @@
-// src/routes/chat.tsx
-import ChatBoxChat from "~/components/chatboxChat";
 import AtlasWord from "~/components/atlasWord";
+import ChatBoxChat from "~/components/chatboxChat";
 import ChatMessages from "~/components/chatMessages"; // New unified component
 import { ChatProvider } from "~/contexts/chatContext";
 

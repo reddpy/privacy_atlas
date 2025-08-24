@@ -145,15 +145,14 @@ export const ChatProvider = (props: ChatProviderProps) => {
             }
           }
         }
-      } catch (error) {
+      } catch (error: any) {
         if (error.name === "AbortError") {
           // Request was aborted - this is expected when stop button is clicked
-          console.log("Stream aborted by user");
           return;
         }
         throw error;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.name === "AbortError") {
         // Request was aborted - this is expected when stop button is clicked
         return;
