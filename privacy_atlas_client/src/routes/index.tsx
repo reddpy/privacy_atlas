@@ -2,6 +2,7 @@ import { useNavigate } from "@solidjs/router";
 import { createEffect, createSignal } from "solid-js";
 import AtlasWord from "~/components/atlasWord";
 import ChatBox from "~/components/chatbox";
+import MenuToggle from "~/components/navigation/menuToggle";
 import SidebarHistory from "~/components/navigation/sidebar";
 import SoundToggle from "~/components/navigation/soundToggle";
 import ThemeToggle from "~/components/navigation/themeToggle";
@@ -23,11 +24,14 @@ export default function Home() {
 
   return (
     <main class="relative min-h-screen text-gray-700 overflow-hidden">
-      <div class="flex flex-row">
-        <div class="flex flex-col m-1 rounded-xl join join-vertical gap-2 p-1">
+      <div class="flex sm:flex-row flex-col">
+        <div class="flex-col hidden sm:flex m-1 join join-vertical gap-2 p-1">
           <ThemeToggle />
           <SoundToggle />
           <SidebarHistory />
+        </div>
+        <div class="flex-col sm:hidden join join-vertical pl-2 pt-2">
+          <MenuToggle />
         </div>
         <div id="chat_app" class="flex-1 flex justify-center">
           <img
@@ -38,17 +42,17 @@ export default function Home() {
           {/* Main content */}
           <div
             id="chat_component_home"
-            class="relative z-10 pt-[17vh] flex flex-col items-center px-4 min-h-screen w-full max-w-4xl"
+            class="relative z-10 sm:pt-[17vh] pt-[10vh] flex flex-col items-center px-4 min-h-[80%] sm:min-h-screen w-full max-w-4xl"
           >
             {/* Text Logo */}
-            <h1 class="my-6 text-7xl text-center max-6-xs">
+            <h1 class="my-6 text-7xl text-center max-6-xs pl-4 sm:pr-6 sm:pl-0 ">
               <AtlasWord />
             </h1>
             {/* Subtitle */}
-            <p class="pb-5 text-3xl font-normal font-apple-garamond text-center">
+            <p class="pb-5 text-3xl font-normal font-apple-garamond text-center pl-6 sm:pl-0">
               The Knowledge of the World, <br class="sm:hidden" /> at your
               fingertips
-              <span class="font-bold text-[#B62E00]">.</span>
+              <span class="font-bold text-5xl text-[#B62E00]">.</span>
             </p>
             {/* ChatBox */}
             <div class="w-full max-w-4xl mb-8">
