@@ -59,6 +59,9 @@ export default function Home() {
               <ChatBox inputSetter={setInput} />
             </div>
           </div>
+          <p class="absolute bottom-0 rounded-2xl bg-[#FFF7ED] p-1 mb-2 mr-6 text-xs">
+            Atlas can make mistakes. Check important Information.
+          </p>
         </div>
       </div>
     </main>

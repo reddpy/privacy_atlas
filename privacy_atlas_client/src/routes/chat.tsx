@@ -29,6 +29,9 @@ const ChatPage = () => {
         >
           <div class="w-full max-w-3xl mx-auto pointer-events-auto">
             <ChatBoxChat />
+            <p class="pb-1 pt-1 text-xs text-center">
+              Atlas can make mistakes. Check important Information.
+            </p>
           </div>
         </div>
       </div>
