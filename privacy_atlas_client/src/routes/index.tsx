@@ -49,13 +49,13 @@ export default function Home() {
               <AtlasWord />
             </h1>
             {/* Subtitle */}
-            <p class="pb-5 text-3xl font-normal font-apple-garamond text-center pl-6 sm:pl-0">
+            <p class="pb-5 text-3xl font-normal font-apple-garamond text-center pl-6 sm:pl-0 sm:pr-10">
               The Knowledge of the World, <br class="sm:hidden" /> at your
               fingertips
-              <span class="font-bold text-5xl text-[#B62E00]">.</span>
+              <span class="font-bold text-4xl text-[#B62E00]">.</span>
             </p>
             {/* ChatBox */}
-            <div class="w-full max-w-4xl mb-8">
+            <div class="w-full max-w-4xl mb-8 sm:pl-0 sm:pr-10">
               <ChatBox inputSetter={setInput} />
             </div>
           </div>
