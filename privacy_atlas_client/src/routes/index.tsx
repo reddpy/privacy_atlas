@@ -3,7 +3,9 @@ import { createEffect, createSignal } from "solid-js";
 import AtlasWord from "~/components/atlasWord";
 import ChatBox from "~/components/chatbox";
 import SidebarHistory from "~/components/navigation/sidebar";
-import { globalState, setGlobalState } from "~/stores/global";
+import SoundToggle from "~/components/navigation/soundToggle";
+import ThemeToggle from "~/components/navigation/themeToggle";
+import { setGlobalState } from "~/stores/global";
 
 export default function Home() {
   const [input, setInput] = createSignal("");
@@ -21,38 +23,37 @@ export default function Home() {
 
   return (
     <main class="relative min-h-screen text-gray-700 overflow-hidden">
-      <div class="absolute top-0 left-0">
-        <SidebarHistory />
-      </div>
-
-      {/* Background image */}
-      <div id="chat_app">
-        <img
-          src="/atlas.png"
-          alt="Atlas bearing the weight of knowledge"
-          class="absolute animate-atlas top-[15vh] left-1/2 -translate-x-1/2 w-[600px] min-w-[600px] max-w-[600px] opacity-10 z-0"
-        />
-
-        {/* Main content */}
-        <div
-          id="chat_component_home"
-          class="relative z-10 pt-[17vh] flex flex-col items-center px-4 min-h-screen w-full"
-        >
-          {/* Logo */}
-          <h1 class="my-6 text-7xl text-center max-6-xs">
-            <AtlasWord />
-          </h1>
-
-          {/* Subtitle */}
-          <p class="pb-5 text-3xl font-normal font-apple-garamond text-center">
-            The Knowledge of the World, <br class="sm:hidden" /> at your
-            fingertips
-            <span class="font-bold text-[#B62E00]">.</span>
-          </p>
-
-          {/* ChatBox */}
-          <div class="w-full max-w-4xl mb-8">
-            <ChatBox inputSetter={setInput} />
+      <div class="flex flex-row">
+        <div class="flex flex-col m-1 rounded-xl join join-vertical gap-2 p-1">
+          <ThemeToggle />
+          <SoundToggle />
+          <SidebarHistory />
+        </div>
+        <div id="chat_app" class="flex-1 flex justify-center">
+          <img
+            src="/atlas.png"
+            alt="Atlas bearing the weight of knowledge"
+            class="absolute animate-atlas top-[15vh] left-1/2 -translate-x-1/2 w-[600px] min-w-[600px] max-w-[600px] opacity-10 z-0"
+          />
+          {/* Main content */}
+          <div
+            id="chat_component_home"
+            class="relative z-10 pt-[17vh] flex flex-col items-center px-4 min-h-screen w-full max-w-4xl"
+          >
+            {/* Text Logo */}
+            <h1 class="my-6 text-7xl text-center max-6-xs">
+              <AtlasWord />
+            </h1>
+            {/* Subtitle */}
+            <p class="pb-5 text-3xl font-normal font-apple-garamond text-center">
+              The Knowledge of the World, <br class="sm:hidden" /> at your
+              fingertips
+              <span class="font-bold text-[#B62E00]">.</span>
+            </p>
+            {/* ChatBox */}
+            <div class="w-full max-w-4xl mb-8">
+              <ChatBox inputSetter={setInput} />
+            </div>
           </div>
         </div>
       </div>

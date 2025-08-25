@@ -99,7 +99,7 @@ const ChatBox = ({ inputSetter }: ChatBoxProps) => {
                   {...props}
                   id={field.name}
                   ref={textareaRef}
-                  placeholder="The Weight of Knowledge, Atlas bears"
+                  placeholder="The Weight of Knowledge"
                   class="h-[40px] min-h-[40px] textarea border-none w-full resize-none focus:outline-none focus:ring-2 focus:ring-sky-500 rounded-xl"
                   rows="1"
                   value={field.value}

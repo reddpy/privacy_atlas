@@ -1,5 +1,5 @@
 import { createSignal, createEffect } from "solid-js";
-import { MessageCircleReply, VolumeX, Volume2, Sun } from "lucide-solid";
+import { MessagesSquare, History } from "lucide-solid";
 
 const SidebarHistory = () => {
   const [sidebarOpen, setSideBarOpen] = createSignal(false);
@@ -13,7 +13,7 @@ const SidebarHistory = () => {
   });
 
   return (
-    <div class="drawer z-50 pt-2 pl-2">
+    <div class="drawer z-50">
       <input id="my-drawer" type="checkbox" class="drawer-toggle" />
       <div class="drawer-content">
         <div
@@ -22,10 +22,10 @@ const SidebarHistory = () => {
         >
           <label
             for="my-drawer"
-            class="btn btn-soft btn-square btn-xl drawer-button"
+            class="btn btn-square rounded-xl btn-md drawer-button"
             onClick={toggleOpen}
           >
-            <MessageCircleReply />
+            <MessagesSquare />
           </label>
         </div>
       </div>
