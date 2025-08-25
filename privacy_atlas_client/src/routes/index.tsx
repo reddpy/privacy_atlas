@@ -30,7 +30,7 @@ export default function Home() {
           <SoundToggle />
           <SidebarHistory />
         </div>
-        <div class="flex-col sm:hidden join join-vertical pl-2 pt-2">
+        <div class="flex-col sm:hidden pl-2 pt-2">
           <MenuToggle />
         </div>
         <div id="chat_app" class="flex-1 flex justify-center">
